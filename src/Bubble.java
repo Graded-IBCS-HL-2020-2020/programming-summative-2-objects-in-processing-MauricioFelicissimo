@@ -12,6 +12,40 @@ class Bubble {
     private float speedY;
     private float speedX;
 
+
+    public Bubble(Sketch sketch){
+      s = sketch;
+      diameter = s.random(50, 70);
+      x = s.random(diameter / 2, s.width - diameter / 2);
+      y = s.random(diameter / 2, s.height - diameter / 2);
+      col = s.color(255, 150);
+      borderColor = s.color(255);
+      speedY = s.random(-2, -4);
+      speedX = s.random(-3, 4);
+    }
+
+    public Bubble(Sketch sketch, float bubbleDiam, float X, float Y, int bubbleColor, int bubbleBorder, float sx, float sy){
+      s = sketch;
+      diameter = bubbleDiam;
+      x = X;
+      y = Y;
+      col = bubbleColor;
+      borderColor = bubbleBorder;
+      speedX = sx;
+      speedY = sy;
+    }
+
+    public Bubble(Sketch sketch, float bubbleDiam, float sx, float sy){
+      s = sketch;
+      diameter = bubbleDiam;
+      x = s.random(diameter / 2, s.width - diameter / 2);
+      y = s.random(diameter / 2, s.height - diameter / 2);
+      col = s.color(255, 150);
+      borderColor = s.color(255);
+      speedX = sx;
+      speedY = sy;
+    }
+
     /**
      * SUMMATIVE REQUIRED Add two constructors for the Bubble class, one that is
      * mostly default and one that allows custom values for whichever you want to be
@@ -28,6 +62,9 @@ class Bubble {
      * SUMMATIVE OPTIONAL Add more than two constructors for varying levels of
      * customization
      */
+     public float getRadius(){
+      return diameter / 2;
+     }
 
     /*
      * SUMMATIVE REQUIRED Add a method called `getRadius()` that returns a float
@@ -48,13 +85,22 @@ class Bubble {
          * SUMMATIVE OPTIONAL Tweak this method so that the bubbles don't bounce off the
          * left and right sides, but loop around to the other side instead.
          */
+        //OPTIONAL
+        if (x < (-getRadius())){
+          x = s.width + getRadius();
+        }
 
+        //OPTIONAL
+        if (x > (s.width + getRadius())){
+          x = -getRadius();
+        }
         /* SUMMATIVE OPTIONAL Tweak bubble movement so that it moves more randomly */
 
         /* If the bubble is on the left or right edge, bounce! */
-        if (x > (s.width - getRadius()) || x < getRadius()) {
-            speedX = -speedX;
-        }
+        /*if (x > (s.width - getRadius()) || x < getRadius()) {
+           speedX = -speedX;
+        }*/
+
         /* If the ball goes off the top, move it to the bottom. */
         if (y < (-getRadius())) {
             y = s.height + getRadius();

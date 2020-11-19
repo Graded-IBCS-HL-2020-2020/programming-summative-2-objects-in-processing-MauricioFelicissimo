@@ -5,39 +5,70 @@ class Ball {
     private float x;
     private float y;
     private int col;
+    private int borderColor; //optional
     private float speedY;
     private float speedX;
-
     /**
-     * The default constructor generates random values for most of the instance
-     * variables.
-     */
+    * The default constructor generates random values for most of the instance
+    * variables.
+    */
+    
     public Ball(Sketch sketch) {
         s = sketch;
         diameter = s.random(50, 150); // random diameter between 50 and 150
         x = s.random(diameter / 2, s.width - diameter / 2);
         y = s.random(diameter / 2, s.height - diameter / 2);
 
-        /*
-         * SUMMATIVE REQUIRED use the randomColor() method in the sketch to set default
-         * balls to a solid random color
-         */
+        col = s.randomColor(false);
+        borderColor = s.randomColor(false);
 
-        /*
-         * SUMMATIVE REQUIRED Set speedX and speedY to reasonable defaults. Random
-         * numbers could be nice, but are not required.
-         */
+        speedX = s.random(4, 7);
+        speedY = s.random(4, 7);
+
+    /*
+    * SUMMATIVE REQUIRED use the randomColor() method in the sketch to set default
+    * balls to a solid random color. 
+    */
+
+    /*
+    * SUMMATIVE REQUIRED Set speedX and speedY to reasonable defaults. Random
+    * numbers could be nice, but are not required.
+    */
     }
 
     /** This constructor lets you specify all of the ball instance variables */
-    public Ball(Sketch s, float X, float Y, float ballDiam, int ballColor, float sx, float sy) {
-        /* SUMMATIVE REQUIRED Fill out this constructor */
+    public Ball(Sketch sketch, float X, float Y, float ballDiam, int ballColor, int ballBorder, float sx, float sy) {
+        s = sketch;
+        diameter = ballDiam;
+        x = X;
+        y = Y;
+        col = ballColor;
+        borderColor = ballBorder;
+        speedX = sx;
+        speedY = sy;
+      /* SUMMATIVE REQUIRED Fill out this constructor */
     }
 
-    /*
+    public float getRadius(){
+      return diameter / 2;
+    
+    
+     /*
      * SUMMATIVE REQUIRED Add a method called `getRadius()` that returns a float
      * representing the radius of the ball
-     */
+    */
+    }
+
+    public void stop(){
+      speedX = 0;
+      speedY = 0;
+    }
+
+    public void start(){
+      speedX = s.random(4, 7);
+      speedY = s.random(4, 7);
+    }
+
 
     /*
      * SUMMATIVE OPTIONAL Add a method called `stop()` that sets the ball speed to
@@ -45,7 +76,10 @@ class Ball {
      * the same speed as before or a random speed.
      * 
      * If you create the methods, you'll need to think of a way to test them...
-     */
+    */
+
+
+
 
     /** Draws the ball. */
     public void drawBall() {
@@ -55,10 +89,13 @@ class Ball {
          * the border color to make it show up. You will need to make other changes too.
          */
 
-        s.stroke(col);
+        s.stroke(borderColor);
         s.fill(col);
         s.ellipse(x, y, diameter, diameter);
     }
+
+
+
 
     /** Moves the balls. */
     public void moveBall() {
